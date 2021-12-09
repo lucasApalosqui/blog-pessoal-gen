@@ -3,9 +3,8 @@ package org.generation.blogPessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.generation.blogPessoal.model.postagem;
 import org.generation.blogPessoal.model.tema;
-import org.generation.blogPessoal.repository.PostagemRepository;
+import org.generation.blogPessoal.repository.TemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,16 +22,16 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/v1/postagem")
-public class PostagemController {
+@RequestMapping("/api/v1/tema")
+public class TemaController {
 
 	@Autowired
-	private PostagemRepository repository;
+	private TemaRepository repository;
 
 	/** findAllTema */
 	@GetMapping("/all")
-	public ResponseEntity<List<postagem>> getAll() {
-		List<postagem> list = repository.findAll();
+	public ResponseEntity<List<tema>> getAll() {
+		List<tema> list = repository.findAll();
 		if (list.isEmpty()) {
 			return ResponseEntity.status(204).build();
 		} else {
@@ -40,16 +39,10 @@ public class PostagemController {
 		}
 	}
 
-	/** postPostagem */
-	@PostMapping("/save")
-	public ResponseEntity<postagem> save(@RequestBody postagem postagem) {
-		return ResponseEntity.status(201).body(repository.save(postagem));
-	}
-	
-	/** findByIDPostagem */
+	/** findByIDTema */
 	@GetMapping("/{id}")
-	public ResponseEntity<postagem> findById(@PathVariable(value = "id") Long id) {
-		Optional<postagem> optional = repository.findById(id);
+	public ResponseEntity<tema> findById(@PathVariable(value = "id") Long id) {
+		Optional<tema> optional = repository.findById(id);
 
 		if (optional.isPresent()) {
 			return ResponseEntity.status(200).body(optional.get());
@@ -57,24 +50,29 @@ public class PostagemController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não existe!");
 		}
 	}
-	
-	/** findByTextoPostagem */
-	@GetMapping("/texto/{texto}")
-	public ResponseEntity<List<postagem>> GetByTexto (@PathVariable String texto) {
-		return ResponseEntity.ok(repository.findAllByTextoContainingIgnoreCase(texto));
+
+	/** findByDescricaoPostagem */
+	@GetMapping("/descricao/{descricao}")
+	public ResponseEntity<List<tema>> GetByTitulo (@PathVariable String descricao) {
+		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(descricao));
 	}
 	
-	/** putPostagem */
+	/** postTema */
+	@PostMapping("/save")
+	public ResponseEntity<tema> save(@RequestBody tema tema) {
+		return ResponseEntity.status(201).body(repository.save(tema));
+	}
+	
+	/** putTema */
 	@PutMapping("/update")
-	public postagem update(@RequestBody postagem newPostagem) {
-		return repository.save(newPostagem);
+	public tema update(@RequestBody tema newTema) {
+		return repository.save(newTema);
 	}
 	
-	/** deletePostagem */
+	/** deleteTema */
 	@DeleteMapping("delete/{id}")
 	public void delete(@PathVariable(value = "id")Long id) {
 		repository.deleteById(id);
 	}
 	
-
 }
