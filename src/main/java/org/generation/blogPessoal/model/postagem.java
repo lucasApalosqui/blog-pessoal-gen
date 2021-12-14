@@ -17,26 +17,25 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.Nullable;
 
-
 @Entity
 @Table(name = "tbl_postagens")
 public class postagem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@NotNull
 	@Size(min = 5, max = 100)
 	private String titulo;
-	
+
 	@NotNull
 	@Size(min = 5, max = 500)
 	private String texto;
-	
+
 	@Nullable
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data = new java.sql.Date(System.currentTimeMillis());
-	
+
 	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	@JoinColumn(name = "fk_tema")
@@ -89,6 +88,5 @@ public class postagem {
 	public void setTema(tema tema) {
 		Tema = tema;
 	}
-	
-	
+
 }
