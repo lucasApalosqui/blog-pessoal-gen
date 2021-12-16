@@ -30,21 +30,20 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/v1/usuario")
 public class UsuarioController {
 
-	@Autowired private UsuarioRepository repository;
-	@Autowired private UsuarioServices services;
+	@Autowired
+	private UsuarioRepository repository;
+	@Autowired
+	private UsuarioServices services;
 
 	@PostMapping("/save")
 	public ResponseEntity<usuario> save(@Valid @RequestBody UsuarioRegisterDTO newUsuario) {
 		return services.registerUser(newUsuario);
 	}
-	
-	
+
 	@PutMapping("/credentials")
-	public ResponseEntity<UserCredentialsDTO> credentials(@Valid @RequestBody UserLoginDTO user){
+	public ResponseEntity<UserCredentialsDTO> credentials(@Valid @RequestBody UserLoginDTO user) {
 		return services.getCredentials(user);
 	}
-	
-	
 
 	@GetMapping("/{id}")
 	public ResponseEntity<usuario> findById(@PathVariable(value = "id") Long id) {

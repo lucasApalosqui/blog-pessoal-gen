@@ -10,6 +10,16 @@ public class UsuarioRegisterDTO {
 	private @NotBlank @Email String email;
 	private @NotBlank @Size(min = 5, max = 25) String senha;
 
+	
+	
+	public UsuarioRegisterDTO() { }
+
+	public UsuarioRegisterDTO(String usuario, String email, String senha) {
+		this.usuario = usuario;
+		this.email = email;
+		this.senha = senha;
+	}
+
 	public String getUsuario() {
 		return usuario;
 	}

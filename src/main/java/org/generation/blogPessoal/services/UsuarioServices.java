@@ -34,11 +34,11 @@ public class UsuarioServices {
 		byte[] structureBase64 = Base64.encodeBase64(structure.getBytes(Charset.forName("US-ASCII")));
 		return new String(structureBase64);
 	}
-	
+
 	private static String generatorTokenBasic(String email, String senha) {
 		String structure = email + ":" + senha; // lucas@email.com:123456
 		byte[] structureBase64 = Base64.encodeBase64(structure.getBytes(Charset.forName("US-ASCII")));
-		return "Basic " +  new String(structureBase64);
+		return "Basic " + new String(structureBase64);
 	}
 
 	public ResponseEntity<usuario> registerUser(@Valid UsuarioRegisterDTO newUsuario) {
@@ -61,21 +61,21 @@ public class UsuarioServices {
 	public ResponseEntity<UserCredentialsDTO> getCredentials(@Valid UserLoginDTO userDto) {
 		return repository.findByEmail(userDto.getEmail()).map(resp -> {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			
+
 			if (encoder.matches(userDto.getSenha(), resp.getSenha())) {
 				credentials = new UserCredentialsDTO();
 				credentials.setId(resp.getId());
 				credentials.setEmail(resp.getEmail());
 				credentials.setToken(resp.getToken());
 				credentials.setTokenBasic(generatorTokenBasic(userDto.getEmail(), userDto.getSenha()));
-				
+
 				return ResponseEntity.status(200).body(credentials);
-				
+
 			} else {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha incorreta");
 			}
-			
+
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email, não registrado no sistema"));
-				}
+	}
 
 }
