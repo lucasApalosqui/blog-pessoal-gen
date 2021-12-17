@@ -39,7 +39,6 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT, "/api/v1/usuario/credentials").permitAll()
 			.anyRequest().authenticated()
 		.and().httpBasic()
-		.and().formLogin()
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().cors()
 		.and().csrf().disable();
