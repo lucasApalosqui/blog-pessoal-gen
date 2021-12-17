@@ -65,4 +65,9 @@ public class UsuarioController {
 			return ResponseEntity.status(200).body(list);
 		}
 	}
+	
+	 @GetMapping("/{token}")
+	    public ResponseEntity<usuario> getProfileByToken(@PathVariable String token){
+	        return ResponseEntity.status(200).body(repository.findByToken(token).get());
+	    }
 }
