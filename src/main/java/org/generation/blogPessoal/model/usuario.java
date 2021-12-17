@@ -5,10 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.sun.istack.NotNull;
+
 
 @Entity
 @Table(name = "tbl_usuario")
@@ -28,6 +27,21 @@ public class usuario {
 	private String senha;
 
 	private String token;
+	
+	private String basicToken;
+	
+	/*@Schema(example = "email@email.com.br")
+	@NotBlank(message = "O atributo usuario é Obrigatorio")
+	@Email(message = "O atributo usuario deve ser um email válido")
+	private String usuarioLog;*/
+
+	public String getBasicToken() {
+		return basicToken;
+	}
+
+	public void setBasicToken(String basicToken) {
+		this.basicToken = basicToken;
+	}
 
 	public Long getId() {
 		return id;
@@ -68,5 +82,6 @@ public class usuario {
 	public void setToken(String token) {
 		this.token = token;
 	}
+
 
 }
