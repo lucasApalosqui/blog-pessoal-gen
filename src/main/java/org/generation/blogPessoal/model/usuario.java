@@ -28,19 +28,19 @@ public class usuario {
 
 	private String token;
 	
-	private String basicToken;
+	private String tokenBasic;
 	
 	/*@Schema(example = "email@email.com.br")
 	@NotBlank(message = "O atributo usuario é Obrigatorio")
 	@Email(message = "O atributo usuario deve ser um email válido")
 	private String usuarioLog;*/
 
-	public String getBasicToken() {
-		return basicToken;
+	public String gettokenBasic() {
+		return tokenBasic;
 	}
 
-	public void setBasicToken(String basicToken) {
-		this.basicToken = basicToken;
+	public void settokenBasic(String tokenBasic) {
+		this.tokenBasic = tokenBasic;
 	}
 
 	public Long getId() {

@@ -54,6 +54,7 @@ public class UsuarioServices {
 			user.setEmail(newUsuario.getEmail());
 			user.setToken(generatorToken(newUsuario.getEmail(), newUsuario.getSenha()));
 			user.setSenha(criptoPassword(newUsuario.getSenha()));
+			user.settokenBasic(generatorTokenBasic(newUsuario.getEmail(), newUsuario.getSenha()));
 			return ResponseEntity.status(201).body(repository.save(user));
 		}
 	}
