@@ -39,6 +39,7 @@ public class UsuarioServices {
 		String structure = email + ":" + senha; // lucas@email.com:123456
 		byte[] structureBase64 = Base64.encodeBase64(structure.getBytes(Charset.forName("US-ASCII")));
 		return "Basic " + new String(structureBase64);
+		
 	}
 
 	public ResponseEntity<usuario> registerUser(@Valid UsuarioRegisterDTO newUsuario) {
@@ -55,6 +56,7 @@ public class UsuarioServices {
 			user.setToken(generatorToken(newUsuario.getEmail(), newUsuario.getSenha()));
 			user.setSenha(criptoPassword(newUsuario.getSenha()));
 			user.settokenBasic(generatorTokenBasic(newUsuario.getEmail(), newUsuario.getSenha()));
+			user.setNome(newUsuario.getNome());
 			return ResponseEntity.status(201).body(repository.save(user));
 		}
 	}
@@ -79,4 +81,32 @@ public class UsuarioServices {
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email, não registrado no sistema"));
 	}
 
+	
+	public Optional<UserLoginDTO> Logar(Optional<UserLoginDTO> user){
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		Optional<usuario> usuario = repository.findByUsuario(user.get().getUsuario());
+		
+		if(usuario.isPresent()) {
+			if(encoder.matches(user.get().getSenha(), usuario.get().getSenha())) {
+				
+				String auth = user.get().getUsuario() + ":" + user.get().getSenha();
+				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
+				String authHeader = "basic " + new String(encodedAuth);
+				
+				user.get().setToken(authHeader);
+				user.get().setId(usuario.get().getId());
+				user.get().setNome(usuario.get().getNome());
+				user.get().setFoto(usuario.get().getFoto());
+				user.get().setTipo(usuario.get().getTipo());
+				
+				
+				
+				return user;
+			}
+		}
+		return null;
+				
+		
+		
+	}
 }

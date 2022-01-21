@@ -9,6 +9,7 @@ public class UsuarioRegisterDTO {
 	private @NotBlank @Size(min = 3, max = 50) String usuario;
 	private @NotBlank @Email String email;
 	private @NotBlank @Size(min = 5, max = 25) String senha;
+	private String nome;
 
 	
 	
@@ -43,5 +44,14 @@ public class UsuarioRegisterDTO {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
 
 }

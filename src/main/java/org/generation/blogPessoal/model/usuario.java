@@ -44,6 +44,8 @@ public class usuario {
 	
 	private String tokenBasic;
 	
+	private String tipo;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<postagem> postagem;
@@ -117,13 +119,6 @@ public class usuario {
 		this.foto = foto;
 	}
 
-	public String getTokenBasic() {
-		return tokenBasic;
-	}
-
-	public void setTokenBasic(String tokenBasic) {
-		this.tokenBasic = tokenBasic;
-	}
 
 	public List<postagem> getPostagem() {
 		return postagem;
@@ -131,6 +126,14 @@ public class usuario {
 
 	public void setPostagem(List<postagem> postagem) {
 		this.postagem = postagem;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 

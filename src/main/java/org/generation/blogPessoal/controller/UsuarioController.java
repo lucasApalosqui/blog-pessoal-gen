@@ -56,7 +56,7 @@ public class UsuarioController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não existe!");
 		}
 	}
-	
+
 	@GetMapping("/{nome}")
 	public ResponseEntity<List<usuario>> findByNome(@PathVariable(value = "nome") String nome) {
 		List<usuario> list = repository.findAllByNomeContainingIgnoreCase(nome);
@@ -77,15 +77,22 @@ public class UsuarioController {
 			return ResponseEntity.status(200).body(list);
 		}
 	}
+
+	@GetMapping("/{token}")
+	public ResponseEntity<usuario> getProfileByToken(@PathVariable String token) {
+		return ResponseEntity.status(200).body(repository.findByToken(token).get());
+	}
+
+	@DeleteMapping("delete/{id}")
+	public void delete(@PathVariable(value = "id") Long id) {
+		repository.deleteById(id);
+	}
 	
-	 @GetMapping("/{token}")
-	    public ResponseEntity<usuario> getProfileByToken(@PathVariable String token){
-	        return ResponseEntity.status(200).body(repository.findByToken(token).get());
-	    }
-	    
-	    @DeleteMapping("delete/{id}")
-		public void delete(@PathVariable(value = "id") Long id) {
-			repository.deleteById(id);
-		}
+	@PostMapping("/logar") 
+	public ResponseEntity<UserLoginDTO> Autentication(@RequestBody Optional<UserLoginDTO> user){
+		return services.Logar(user).map(resp -> ResponseEntity.ok(resp))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+				
+	}
 
 }
