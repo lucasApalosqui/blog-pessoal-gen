@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,6 +56,17 @@ public class UsuarioController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não existe!");
 		}
 	}
+	
+	@GetMapping("/{nome}")
+	public ResponseEntity<List<usuario>> findByNome(@PathVariable(value = "nome") String nome) {
+		List<usuario> list = repository.findAllByNomeContainingIgnoreCase(nome);
+
+		if (list.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		} else {
+			return ResponseEntity.status(200).body(list);
+		}
+	}
 
 	@GetMapping("/all")
 	public ResponseEntity<List<usuario>> getAll() {
@@ -70,4 +82,10 @@ public class UsuarioController {
 	    public ResponseEntity<usuario> getProfileByToken(@PathVariable String token){
 	        return ResponseEntity.status(200).body(repository.findByToken(token).get());
 	    }
+	    
+	    @DeleteMapping("delete/{id}")
+		public void delete(@PathVariable(value = "id") Long id) {
+			repository.deleteById(id);
+		}
+
 }

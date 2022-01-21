@@ -40,6 +40,18 @@ public class postagem {
 	@JsonIgnoreProperties("postagem")
 	@JoinColumn(name = "fk_tema")
 	private tema Tema;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private usuario usuario;
+
+	public usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public long getId() {
 		return id;

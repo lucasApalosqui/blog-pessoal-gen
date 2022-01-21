@@ -5,9 +5,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class UserLoginDTO {
+	private long id;
 
 	private @NotBlank @Email String email;
-	private @NotBlank @Size(min = 5, max = 25) String senha;
+	private @NotBlank @Size(min = 5) String senha;
 
 	public String getEmail() {
 		return email;
@@ -23,6 +24,13 @@ public class UserLoginDTO {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

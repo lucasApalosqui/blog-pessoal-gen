@@ -3,6 +3,8 @@ package org.generation.blogPessoal.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.generation.blogPessoal.model.postagem;
 import org.generation.blogPessoal.model.tema;
 import org.generation.blogPessoal.repository.PostagemRepository;
@@ -42,7 +44,7 @@ public class PostagemController {
 
 	/** postPostagem */
 	@PostMapping("/save")
-	public ResponseEntity<postagem> save(@RequestBody postagem postagem) {
+	public ResponseEntity<postagem> save(@Valid @RequestBody postagem postagem) {
 		return ResponseEntity.status(201).body(repository.save(postagem));
 	}
 	
@@ -66,7 +68,7 @@ public class PostagemController {
 	
 	/** putPostagem */
 	@PutMapping("/update")
-	public postagem update(@RequestBody postagem newPostagem) {
+	public postagem update(@Valid @RequestBody postagem newPostagem) {
 		return repository.save(newPostagem);
 	}
 	
